@@ -39,6 +39,11 @@ public class EnderecoController {
         }
         return ResponseEntity.notFound().build();
     }
+    @DeleteMapping("/usuarios/{usuarioId}/enderecos/{enderecoId}")
+    public ResponseEntity<Void> deletarEnderecoPorId(@PathVariable long usuarioId, @PathVariable long enderecoId){
+        enderecoService.removerEnderecoPorId(enderecoId, usuarioId);
+        return ResponseEntity.noContent().build();
+    }
 }
 
-// HUGO,
+

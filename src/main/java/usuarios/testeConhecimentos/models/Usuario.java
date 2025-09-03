@@ -1,5 +1,6 @@
 package usuarios.testeConhecimentos.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Usuario {
     private String senha;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Endereco> enderecos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)

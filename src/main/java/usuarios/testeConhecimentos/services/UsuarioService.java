@@ -19,7 +19,6 @@ import java.util.Optional;
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final EnderecoService enderecoService;
-
     public UsuarioService(UsuarioRepository usuarioRepository, EnderecoService enderecoService) {
         this.usuarioRepository = usuarioRepository;
         this.enderecoService = enderecoService;
@@ -68,9 +67,7 @@ public class UsuarioService {
     }
 
     public Optional<Usuario> encontrarUsuarioPorId(long id){
-        Optional<Usuario> result = usuarioRepository.findById(id);
-
-        return result.map(usuarioRepository::save);
+        return usuarioRepository.findById(id);
     }
 
     public Optional<UsuarioLoginDTO> loginUsuario(String email, String senha){
