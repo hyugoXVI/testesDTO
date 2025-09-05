@@ -41,9 +41,6 @@ public class UsuarioService {
         return usuario;
     }
 
-    public Usuario salvarUsuario(Usuario usuario){
-        return usuarioRepository.save(usuario);
-    }
 
     // Só para ter uma ideia e consultar algumas coisas.
     public List<Usuario> mostrarUsuarios(){
@@ -55,12 +52,12 @@ public class UsuarioService {
 
         if (result.isPresent()){
             Usuario usuario = result.get();
-            List<EnderecoDTO> enderecoDTOS = usuario.getEnderecos()
+            List<EnderecoDTO>enderecoDTO = usuario.getEnderecos()
                     .stream()
                     .map(x -> new EnderecoDTO(x.getCidade(), x.getEstado()))
                     .toList();
 
-            UsuarioDTO dto = new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(),enderecoDTOS);
+            UsuarioDTO dto = new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getEmail(),enderecoDTO);
             return Optional.of(dto);
         }
         return Optional.empty();

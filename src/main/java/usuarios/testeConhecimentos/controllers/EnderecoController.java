@@ -1,5 +1,7 @@
 package usuarios.testeConhecimentos.controllers;
 
+import usuarios.testeConhecimentos.dtos.EnderecoDTO;
+import usuarios.testeConhecimentos.dtos.EnderecoUsuarioNomeDTO;
 import usuarios.testeConhecimentos.models.Endereco;
 import usuarios.testeConhecimentos.models.Usuario;
 import org.springframework.http.HttpStatus;
@@ -22,13 +24,18 @@ public class EnderecoController {
         this.usuarioService = usuarioService;
     }
 
+    @GetMapping("/enderecos")
+    public List<EnderecoUsuarioNomeDTO> mostrarEnderecos(){
+        return enderecoService.mostrarEnderecos();
+    }
+
     @GetMapping("/usuarios/{usuarioId}/enderecos")
     public List<Endereco> mostrarEnderecosDeUmUsuario(@PathVariable long usuarioId) {
-        return enderecoService.mostrarEnderecosPorId(usuarioId);
+        return enderecoService.mostrarEnderecosPorUsuarioId(usuarioId);
     }
 
     @PostMapping("/usuarios/{usuarioId}/enderecos")
-    public ResponseEntity<Endereco> adiconarEnderecoPorId(@PathVariable long usuarioId, @RequestBody Endereco endereco) {
+    public ResponseEntity<Endereco> adiconarEnderecoAoUsuario(@PathVariable long usuarioId, @RequestBody Endereco endereco) {
         Optional<Usuario> usuarioOptional = usuarioService.encontrarUsuarioPorId(usuarioId);
 
         if (usuarioOptional.isPresent()) {
@@ -39,6 +46,7 @@ public class EnderecoController {
         }
         return ResponseEntity.notFound().build();
     }
+
     @DeleteMapping("/usuarios/{usuarioId}/enderecos/{enderecoId}")
     public ResponseEntity<Void> deletarEnderecoPorId(@PathVariable long usuarioId, @PathVariable long enderecoId){
         enderecoService.removerEnderecoPorId(enderecoId, usuarioId);

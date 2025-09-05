@@ -1,6 +1,7 @@
 package usuarios.testeConhecimentos.controllers;
 
 import usuarios.testeConhecimentos.dtos.UsuarioCadastrarDTO;
+import usuarios.testeConhecimentos.dtos.UsuarioDTO;
 import usuarios.testeConhecimentos.dtos.UsuarioLoginDTO;
 import usuarios.testeConhecimentos.models.Usuario;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +33,18 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<UsuarioLoginDTO> loginUsuario(@RequestBody UsuarioLoginDTO dto) {
         Optional<UsuarioLoginDTO> result = usuarioService.loginUsuario(dto.getEmail(), dto.getSenha());
-        return result.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+        return result.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/encontrarUsuario/{usuarioId}")
+    public Optional<Usuario> encontrarUsuarioPorId(@PathVariable long usuarioId){
+        return usuarioService.encontrarUsuarioPorId(usuarioId);
+    }
+
+
+    @GetMapping("/encontrarUsuarioDTO/{usuarioId}")
+    public Optional<UsuarioDTO> encontrarUsuarioDTOPorId(@PathVariable long usuarioId){
+        return usuarioService.encontrarUsuarioDTOPorId(usuarioId);
+    }
+
 }

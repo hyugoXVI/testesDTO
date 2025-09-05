@@ -1,6 +1,8 @@
 package usuarios.testeConhecimentos.services;
 
 import jakarta.transaction.Transactional;
+import usuarios.testeConhecimentos.dtos.EnderecoDTO;
+import usuarios.testeConhecimentos.dtos.EnderecoUsuarioNomeDTO;
 import usuarios.testeConhecimentos.models.Endereco;
 import usuarios.testeConhecimentos.models.Usuario;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,18 @@ public class EnderecoService {
         this.enderecoRepository = enderecoRepository;
     }
 
+    public List<EnderecoUsuarioNomeDTO> mostrarEnderecos(){
+        List<Endereco> endereco = enderecoRepository.findByOrderByIdAsc();
+
+        return endereco.stream()
+                .map(x -> new EnderecoUsuarioNomeDTO(x.getCidade(), x.getEstado(), x.getUsuario().getNome()))
+                .toList();
+    }
+
     public void cadastrarEndereco(Endereco endereco) {
         enderecoRepository.save(endereco);
     }
-    public List<Endereco> mostrarEnderecosPorId(long id){
+    public List<Endereco> mostrarEnderecosPorUsuarioId(long id){
         return enderecoRepository.findAllByUsuarioId(id);
     }
 

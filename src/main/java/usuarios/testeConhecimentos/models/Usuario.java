@@ -22,6 +22,7 @@ public class Usuario {
     private List<Endereco> enderecos;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Produto> produtos;
 
     public Usuario(){

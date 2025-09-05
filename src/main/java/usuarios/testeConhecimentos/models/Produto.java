@@ -1,5 +1,6 @@
 package usuarios.testeConhecimentos.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,12 +15,12 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     private Usuario usuario;
 
     public Produto(){}
 
-    public Produto(long id, String nome, double preco, Usuario usuario) {
-        this.id = id;
+    public Produto(String nome, double preco, Usuario usuario) {
         this.nome = nome;
         this.preco = preco;
         this.usuario = usuario;
